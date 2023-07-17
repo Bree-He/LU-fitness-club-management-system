@@ -1,0 +1,50 @@
+{% extends "member.html" %}
+
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">My Bookings</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Group Class Booking</h5>
+                    <hr>
+                    {% if mybooking|length == 0 %}  
+                        <p class="text-center">You haven't booked any group classes yet.</p>                          
+                    {% else %} 
+                        {% for booking in mybooking %}
+                            <h6 class="card-title">{{ booking[1] }}</h6>
+                            <h7 class="card-title">{{ booking[2] }}</h7>
+                            <h9 class="card-title">{{ booking[3] }}</h9>
+                        {% endfor %}
+                    {% endif %}               
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Personal Class Booking</h5>
+                    <hr>
+                    {% if myptbooking|length == 0 %}  
+                        <p class="text-center">You haven't booked any personal classes yet.</p>                          
+                    {% else %} 
+                        {% for ptbooking in myptbooking %}
+                            <h6 class="card-title">{{ ptbooking[1] }}</h6>
+                            <h7 class="card-title">{{ ptbooking[2] }}</h7>
+                            <h9 class="card-title">{{ ptbooking[3] }}</h9>
+                        {% endfor %}
+                    {% endif %}
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

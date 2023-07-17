@@ -1,0 +1,149 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<head>
+<style>
+    
+    .container {
+        background-color: #f2f2f2;
+        width: 500px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
+    .col-md-12,
+    .col-md-4{
+        padding: 16px 16px;
+    }
+    h2{
+        text-align: center;
+    }
+    h5{
+        color: red;
+        text-align: center;
+    }
+    
+</style>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning text-center" role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}    
+<br>
+<div class="container">
+    
+<form method="POST" action="{{ url_for('member.payment') }}" class="row g-3">
+    <h2>Subscription Payment</h2>
+    <h5>Due date: {{duedate}}</h5>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="amount">Amount to pay:</label>
+            <input type="number" id="amount" name="amount" value="30.00" readonly>
+        </div>
+    <div class="form-group col-md-12">
+    <label for="card_type" class="form-label">Card Type:</label>
+    <select name="card_type" id="card_type" class="form-select">
+      <option value="credit">Credit</option>
+      <option value="debit">Debit</option>
+    </select>
+    </div>
+    </div>
+    <br>
+    <!-- <label for="card_number">Card Number:</label> -->
+    <div class="row">
+    <div class="form-group col-md-12">
+    <input type="tel" id="card_number" name="card_number" inputmode="numeric" placeholder="xxxx xxxx xxxx xxxx" required pattern="[0-9\s]{13,19}" class="form-control">
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="form-group col-md-12">
+    <input type="text" id="name" name="name" placeholder="Name" required maxlength="40" class="form-control">
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="form-group col-md-4">
+    <input type="number" id="month" name="month" min="01" max="12" placeholder="MM" class="form-control" required>
+    </div>
+    <br>
+    <div class="form-group col-md-4">
+    <input type="number" id="year" name="year" min="2023" max="2030" placeholder="YY" class="form-control" required>
+    </div>
+    
+    <br>
+    
+    <div class="form-group col-md-4">
+    <input type="number" id="cvv" name="cvv" placeholder="CVC" class="form-control" min="100" max="999">
+    </div>
+    </div>
+    <br>
+    <div class="col-md-4">
+    <label for="auto_pay" >Auto-renewal:  </label>
+    </div>
+    <div class="col-md-4">
+    <input type="radio" id="renewal" name="renewal" value="yes" style="display: inline-block;">
+    <label for="Yes" style="display: inline-block;"> Yes </label>
+    </div>
+    <div class="col-md-4">
+    <input type="radio" id="renewal" name="renewal" value="No" style="display: inline-block;" checked>
+    <label for="No" style="display: inline-block;"> No </label>
+    </div>
+    <div class="d-grid gap-4 col-3 mx-auto">
+    
+    <input type="submit" value="Pay" class="btn btn-outline-primary">
+    </div>
+    
+  </form>
+
+</div>
+</body>
+
+  {% endblock %}
+
+  from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Replace this with your payment gateway API credentials
+PAYMENT_GATEWAY_API_KEY = "your_api_key"
+PAYMENT_GATEWAY_API_SECRET = "your_api_secret"
+
+@app.route("/membership/pay", methods=["POST"])
+def make_payment():
+    payment_method = request.form.get("payment_method")
+    amount = request.form.get("amount")
+    auto_renewal = request.form.get("auto_renewal")
+
+    # Check if payment method is valid
+    if payment_method not in ["cash", "EFTPOS", "online"]:
+        return jsonify({"error": "Invalid payment method"}), 400
+
+    # Check if amount is valid
+    try:
+        amount = float(amount)
+    except ValueError:
+        return jsonify({"error": "Invalid amount"}), 400
+
+    # Replace this with your payment gateway API code
+    # Process payment using payment gateway API
+    payment_result = process_payment(payment_method, amount, PAYMENT_GATEWAY_API_KEY, PAYMENT_GATEWAY_API_SECRET)
+
+    if payment_result.successful:
+        # Payment was successful
+        if auto_renewal:
+            # Update user's auto-renewal status in the database
+            update_auto_renewal_status(user_id, True)
+        return jsonify({"message": "Payment successful"}), 200
+    else:
+        # Payment was unsuccessful
+        return jsonify({"error": "Payment unsuccessful"}), 400

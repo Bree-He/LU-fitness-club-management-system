@@ -1,0 +1,46 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 text-center">
+    <h5>Revenue</h5>
+    <h6>2023</h6>
+    <hr>
+</div>
+<div class="container">
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-primary">
+            <tr>
+                Note* February membership is $10 per member with the gym opening discount
+            </tr>
+            <tr>
+                <th>Items</th>
+                {% for col in monthsCols %}
+                    <th class="text-center">{{col[0]}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Menbership Subscription - $30 per member</td>
+                {% for sub in subRevenue %}
+                    <td class="text-center">{%if sub[1] == "0.00"%}N/A{%else%}${{sub[1]}}{%endif%}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Personal Session - $30 per session</td>
+                {% for pt in ptRevenue %}
+                    <td class="text-center">{%if pt[1] == "0.00"%}N/A{%else%}${{pt[1]}}{%endif%}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Total ($)</td>
+                {% for total in totalRevenue %}
+                    <td class="text-center">${{total[0][1]}}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "trainer.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3">
+    {% for profile in  trainerProfile %}  
+        <div class="row">  
+            <div class="col-md-4"> 
+                <div class="card"> 
+                    <img src="{{ url_for('trainer.static', filename='profile_pic.jpg') }}" class="card-img-top"> 
+                    <div class="card-body">
+                        <h5 class="card-title">{{profile[1]}}</h5>
+                        <h5 class="card-title">Date of birth:{{profile[2]}}</h5>  
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">My Profile<a href="{{ url_for('trainer.update_profile') }}" class="btn btn-primary btn-sm" style="float: right;">Update</a></h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Email:</strong></p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{profile[3]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Phone:</strong></p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{profile[4]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Education:</strong></p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{profile[5]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Expertise:</strong></p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{profile[6]}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Introduction:</strong></p>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{profile[7]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+    
+
+    
+    <div class="container">
+    <!-- using bootstrap hover table format -->
+    <table class="table table-hover table table-sm table-striped table-bordered">
+        <thead>
+            <p></p>
+            <p></p>
+            <p class="h5">Group Class</p>
+        <tr>
+    <!-- title row will show in order when using the for loop -->
+            {% for col in grpCols %}
+            <th class="text-center">{{col}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <!-- title row will show in order when using the for loop -->
+        {% for result in grpClass %}
+            <tr>
+            {% for col in range(grpCols|length) %}
+            
+                <td class="text-center">{%if col == grpCols|length -1 %}{{result[col]}}/30{%else%}{{result[col]}}{%endif%}</td>
+             
+            {% endfor %}
+            </tr>  
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <table class="table table-hover table table-sm table-striped table-bordered">
+        <thead>
+            <p class="h5">Personal Session</p>
+        <tr>
+            {% for col in ptCols %}
+            <th class="text-center">{{col}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <!-- title row will show in order when using the for loop -->
+        {% for result in ptClass %}
+            <tr>
+            {% for col in range(5) %}
+                <td class="text-center">{{result[col]}}</td>
+            {% endfor %}
+            <td class="text-center">
+                <a type="button" href="{{url_for('trainer.trainee')}}">Trainee's Detail</a>
+            </td>
+            </tr>  
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+ 
+{% endblock %}

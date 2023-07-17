@@ -1,0 +1,42 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 text-center">
+    <h5>Trainers List</h5>
+    <hr>
+</div>
+<div class="container">
+    <table class="table table-striped table-hover table-bordered text-center">
+        <thead class="table-primary">
+            <tr>
+                <th>Name</th>
+                <th>Class Day</th>
+                <th>Time</th>
+                <th>Class Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set traninerid = namespace(id =0) %} 
+            {% for trainer in trainerslist %}
+                <tr>
+                    {% if traninerid.id != trainer[0]%}  
+                    <td class="{{ trainer[1] }}"><a href="{{ url_for('member.tdescription', trainer_id = trainer[0]) }}">{{ trainer[1] }} </a></td>
+                    <td> {{ trainer[2] }} </td>
+                    <td> {{ trainer[3] }} - {{ trainer[4] }} </td>
+                    <td> {{ trainer[5] }} </td>
+                    {% set traninerid.id = trainer[0] %}
+                    {% else %}
+                    <td></td>
+                    <td> {{ trainer[2] }} </td>
+                    <td> {{ trainer[3] }} - {{ trainer[4] }} </td>
+                    <td> {{ trainer[5] }} </td>
+                    {% endif %}  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

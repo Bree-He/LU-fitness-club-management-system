@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{%block title%}LU Gym{%endblock%}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- background -->
+    </head>
+
+    <body>
+        <div class="topbox">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="/static/img/milogo.jpg" alt="lincoln logo" width="100px" height="100px" class="logo flex-shrink-1 img-fluid rounded-circle" style="padding-right: 10px;">
+            </a>
+            <h1 class="d-flex align-self-center flex-grow-1">Lincoln University Gym</h1>
+        </div>
+            <ul class="nav justify-content-center">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link active"  href="{{ url_for('login') }}">Login</a></li>
+            <li class="nav-item"><a class="nav-link active"  href="{{ url_for('home') }}">Join now</a></li>
+            </ul>
+                
+          <section class="content">
+            <header>
+              {% block header %}{% endblock %}
+            </header>
+            {% for message in get_flashed_messages() %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+            {% block content %}
+            <section id="hero" class="jumbotron jumbotron-fluid bg-dark text-white">
+                <div class="container-1">
+                  <!-- <video src="static/video/video.mov" autoplay muted loop></video> -->
+                  <h1 class="display-4">Get Fit and Healthy</h1>
+                  <p class="lead">Join us and achieve your fitness goals.</p>
+                </div>
+            </section>
+          
+              <section id="classes">
+                <class class="card">
+                  <!-- <img
+                    src="/static/img/personaltraining.jpeg"
+                    class="card-img-top"
+                    alt="personaltraining"
+                  /> -->
+                  <div class="card-body">
+                    <h4 class="card-title">Personal Training</h4>
+                    <p class="card-text">
+                      Get one-on-one attention from our expert trainers to help you
+                      achieve your fitness goals.
+                    </p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Book Personal Training Session</a>
+                  </div>
+                  <div class="card-header">
+                    Featured
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Customized workout plans</li>
+                      <li class="list-group-item">Nutrition guidance</li>
+                      <li class="list-group-item">Accountability and motivation</li>
+                    </ul>
+                  </div>
+                </class>
+                <class class="card">
+                  <!-- <img
+                    src="/static/img/grouptraining.jpeg"
+                    class="card-img-top"
+                    alt="grouptraining"
+                  /> -->
+                  <div class="card-body">
+                    <h4 class="card-title">Group Classes</h4>
+                    <p class="card-text">
+                      Join our fun and challenging group classes to stay motivated and
+                      achieve your fitness goals together.
+                    </p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Book Group Classes</a>
+                  </div>
+                  <div class="card-header">
+                    Featured
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        Variety of classes for all fitness levels
+                      </li>
+                      <li class="list-group-item">
+                        Qualified and experienced instructors
+                      </li>
+                      <li class="list-group-item">
+                        Encouraging and supportive community
+                      </li>
+                    </ul>
+                  </div>
+                </class>
+                <class class="card">
+                  <!-- <img
+                    src="/static/img/4.jpeg"
+                    class="card-img-top"
+                    alt="grouptraining"
+                  /> -->
+                  <div class="card-body">
+                    <h4 class="card-title">Hours</h4>
+                    <p class="card-text">
+                      Hours may vary on public holidays and during the festive season.
+                    </p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary"
+                      >Check the trainer's availability</a
+                    >
+                  </div>
+                  <div class="card-header">
+                    Hours
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Monday - Thursday 5.30am - 9.00pm</li>
+                      <li class="list-group-item">Friday 5.30am - 8.00pm</li>
+                      <li class="list-group-item">Saturday & Sunday 7.00am - 5.00pm</li>
+                    </ul>
+                  </div>
+                </class>
+                <class class="card">
+                  <!-- <img
+                    src="/static/img/5.jpeg"
+                    class="card-img-top"
+                    alt="grouptraining"
+                  /> -->
+                  <div class="card-body">
+                    <h4 class="card-title">Memberships</h4>
+                    <p class="card-text">
+                      For a guided tour of our facility please contact reception on 03 423
+                      0550 or recsuper@lincoln.ac.nz
+                    </p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Check Membership status</a>
+                  </div>
+                  <div class="card-header">
+                    Details
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        To view LU Gym membership options <a href="{{ url_for('home') }}">click here</a>
+                      </li>
+                      <li class="list-group-item">
+                        To renew your membership <a href="{{ url_for('login') }}">click here</a>
+                      </li>
+                    </ul>
+                  </div>
+                </class>
+              </section>
+          
+              <div
+                id="carousele"
+                class="carousel carousel-dark slide"
+                data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carousele"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carousele"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carousele"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <!-- <img src="/static/img/1.png" class="d-block w-100" alt="img" /> -->
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Joe Member Since 2011</h5>
+                      <p>
+                        This gym has changed my life. The trainers are knowledgeable and
+                        supportive, and the community is amazing. I look forward to
+                        working out every day!".
+                      </p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <!-- <img src="/static/img/2.jpeg" class="d-block w-100" alt="img" /> -->
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Hellen Member Since 2013</h5>
+                      <p>
+                        I have tried other gyms in the past, but none have compared to the
+                        quality of this gym. The equipment is top-notch and the staff is
+                        always friendly and helpful."
+                      </p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <!-- <img src="/static/img/3.jpeg" class="d-block w-100" alt="img" /> -->
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Mathew Member Since 2015</h5>
+                      <p>
+                        "I was hesitant to try group classes, but now they are my favorite
+                        part of my workout routine. The instructors push me to my limits
+                        and the other members are so supportive."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carousele"
+                  data-bs-slide="prev"
+                >
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carousele"
+                  data-bs-slide="next"
+                >
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+          
+              <!-- Footer -->
+              <footer class="bg-dark text-white">
+                <div class="container-footer"></div>
+                    <div class="col-md-12">
+                      <h5>Contact Us</h5>
+                      <address>
+                        Calder Dr, Lincoln University 7674, New Zealand<br />
+                        Phone: 03 4230550<br />
+                        Email: recsuper@lincoln.ac.nz
+                      </address>
+                    </div>
+                  </div>
+              </footer>
+              
+
+          </section>
+          {% endblock %}
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </body>
+</html>

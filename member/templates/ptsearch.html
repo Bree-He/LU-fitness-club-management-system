@@ -1,0 +1,85 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block head %}
+    <title>Training Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h4 class="text-center"> Search the perfect trainer for you</h4>
+    <br>
+    <form method="post" action="{{ url_for('member.ptsearch') }}" class="form-inline">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.pt_class_name.id }}">Class Type:</label>
+                {{ form.pt_class_name }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.first_name.id }}">Trainer Name:</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.avail_date.id }}">Training Date:</label>
+                {{ form.avail_date }}
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Search</button>
+        
+        </div>
+    </form>
+</div>
+<br>
+<div class="container">
+    {% if results %}
+        <table class="table table-hover table-striped table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Personal Training Type</th>
+                    <th>Trainer Name</th>
+                    <th>Training Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+    <tr>
+        <td>{{ result[0] }}</td>
+        <td>{{ result[1] }}</td>
+        <td>{{ result[2] }}</td>
+        <td>{{ result[3] }}</td>
+        <td>{{ result[4] }}</td>
+        <td>{{ result[5] }}</td>
+
+        <td>
+            <form method="post" action="{{ url_for('member.pt_payment') }}">
+                {{ form.csrf_token }}
+                <input type="hidden" name="pt_class_name" value="{{ result[0] }}">
+                <input type="hidden" name="trainer_name" value="{{ result[1] }}">
+                <input type="hidden" name="training_date" value="{{ result[2] }}">
+                <input type="hidden" name="start_time" value="{{ result[3] }}">
+                <input type="hidden" name="end_time" value="{{ result[4] }}">
+                <input type="hidden" name="price" value="{{ result[5] }}">
+                <input type="hidden" name="pt_class_id" value="{{ result[6] }}">
+                <button type="submit" class="btn btn-primary">Book and Pay</button>
+            </form>
+        </td>
+    </tr>
+               {% endfor %}
+            </tbody>
+        </table>
+        
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+

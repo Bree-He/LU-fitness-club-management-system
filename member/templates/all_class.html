@@ -1,0 +1,137 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-primary text-center" role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}  
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header bg-light text-center">
+					<h1 class="mb-0 text-primary">Group Class Schedule</h1>
+				</div>
+				<div class="card-body">
+					<table class="table table-striped table-hover table-bordered">
+						<thead class="mb-0 bg-primary text-white text-center">
+							<tr>
+								<th>Time</th>
+								<th>Monday</th>
+								<th>Tuesday</th>
+								<th>Wednesday</th>
+								<th>Thursday</th>
+								<th>Friday</th>
+								<th>Saturday</th>
+								<th>Sunday</th>
+							</tr>
+						</thead>
+						<tbody class="text-center">
+							<tr>   
+								<td class="col-2">08:00 AM - 09:00 AM</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name=class_list[5][0], weekday='Friday') }}"> Chiseled - Carl Davis</div>
+								</td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name=class_list[1][0], weekday='Saturday') }}"> BodyBlance - Mike Brown</div>
+								</td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[4][0], weekday='Sunday') }}"> BodyPump - Caleb Wilson</div>
+								</td>
+							</tr>
+							<tr>
+								<td>09:00 AM - 10:00 AM</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[4][0], weekday='Friday') }}"> BodyPump - Liam Kim</div>
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>10:00 AM - 11:00 AM</td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[8][0], weekday='Wednesday') }}"> Zumba - Jason Kim</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[7][0], weekday='Saturday') }}"> Yoga - Jason Kim</div>
+								</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>11:00 AM - 12:00 PM</td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[1][0], weekday='Wednesday') }}"> BodyBlance - Jade Brown</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>13:00 PM - 14:00 PM</td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[0][0], weekday='Monday') }}"> BodyAttack - Joe Wilson</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>14:00 PM - 15:00 PM</td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[2][0], weekday='Tuesday') }}"> BodyCombat - Karen Chen</div>
+								</td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[3][0], weekday='Thursday') }}"> BodyJam - Jerry Davis</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>16:00 PM - 17:00 PM</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[6][0], weekday='Thursday') }}"> Lincoln 45 - Neil Chen</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<div><a href="{{ url_for('member.book_class', class_name = class_list[8][0], weekday='Sunday') }}"> Zumba - Neil Chen</div>
+								</td>
+							</tr>
+						</tbody>
+            		</table>
+        		</div>
+    		</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

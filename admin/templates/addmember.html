@@ -1,0 +1,122 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+
+    <style>
+    h2,p {
+        text-align: center;
+    }
+    p{
+      color: gray;
+    }
+      /* Center the form */
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      /* Style the form elements */
+      form {
+        padding: 20px;
+        max-width: 500px;
+        width: 100%;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    {% if msg %}
+    <div class="alert alert-danger" role="alert">
+        {{ msg }}
+    </div>
+    {% endif %}
+    <h2>New Member</h2>
+    <p>Reqiured values are marked by an asterisk *</p><br><br>
+    <div class="center">
+      <form action="{{ url_for('admin.add_member') }}" name="addmember" id="addmember" method="POST" >
+        <fieldset id="custregister" class="savehistory">
+
+        <label for="firstname">First Name*:</label>
+        <input type="text" id="firstname" name="firstname" value="{{firstname}}" required pattern="[a-zA-Z]+"  title="Please enter a valid first name (only alphabetic characters)"  required>
+
+        <label for="lastname">Last Name*:</label>
+        <input type="text" id="lastname" name="lastname" value="{{lastname}}" required pattern="[a-zA-Z]+" title="Please enter a valid last name (only alphabetic characters)" required>
+
+        <label for="dob">Date of birth*:</label>
+        <input type="date" max="2009-03-31" id="dob" name="dob" value="{{dob}}" required>
+
+        <label for="address">Address*:</label>
+        <input type="text" id="address" name="address" value="{{address}}" required pattern="^[a-zA-Z0-9\s,'-]*$" required>
+
+        <label for="email">Email*:</label>
+        <input type="email" id="email" name="email" value="{{email}}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+
+        <label for="phone">Phone*:</label>
+        <!-- email pattern -->
+        <input type="tel" id="phone" name="phone" value="{{phone}}" placeholder="XX-XXX-XXXX" title="Please enter a valid phone number with 9 to 11 digits" maxlength="13" required>
+        
+        <label for="health_condition">Health condition:</label>
+        <textarea id="health_condition" name="health_condition" value="{{health_condition}}" rows="4" cols="58">N/A</textarea>
+        <!-- sub date the date to join the membership -->
+        <input type="hidden" id="subdate" name="subdate" value="{{subdate}}">
+        <div class="d-grid gap-2 col-1 mx-auto">
+        <input type="submit" value="Submit" class="btn btn-outline-primary" >
+        <input type="reset" value="Reset" class="btn btn-outline-secondary">
+        </div>
+      </fieldset>
+      </form>
+    </div>
+  </body>
+  <script>
+    // Get the phone number input element by ID
+    const phoneInput = document.getElementById("phone");
+    // Add an event listener for input changes
+    phoneInput.addEventListener("input", function(event) {
+        // Get the raw input value without formatting
+        let rawValue = event.target.value.replace(/\D/g, "");
+
+        // Limit the length of the input to between 9 and 11 characters
+
+        if (rawValue.length < 12) {
+            rawValue = rawValue.slice(0, 12);
+        } else if (rawValue.length > 9) {
+            rawValue = rawValue.slice(0, 9);
+        }
+        // Format the value as XX-XXX-XXXXX
+        let formattedValue = "";
+        for (let i = 0; i < rawValue.length; i++) {
+            if (i == 2 || i == 5) {
+                formattedValue += "-";
+            }
+            formattedValue += rawValue[i];
+        }  
+        // Set the formatted value back to the input field
+        event.target.value = formattedValue;
+    });
+    // Add an event listener for form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (phoneInput.value.replace(/\D/g, '').length < 9) {
+            alert('Please enter a valid phone number with at least 9 digits');
+            event.preventDefault();
+        }
+    });
+  </script> 
+ 
+{% endblock %}

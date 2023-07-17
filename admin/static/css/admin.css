@@ -1,0 +1,42 @@
+.topbox{
+    height: 90px;
+    background-color: #0062ff;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+h1{
+    color: white;
+    font-size: 2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+}
+body{
+    background-color: white;
+}
+.name{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+}
+.dropdown-menu a {
+    color: #0d6efd;
+}
+.form-select {
+    width: 20%;
+}
+.table {
+    margin-top: 1.5rem;
+}
+.export-btn {
+    float: right;
+}
+.adminInterface {
+    display: block;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}

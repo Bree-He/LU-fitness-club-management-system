@@ -1,0 +1,154 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<head>
+    <title>Attendance Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #FFF;
+			
+        }
+        h2, h3 {
+            text-align: center;
+            color: #0d6efd;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        label, select, input[type="date"], input[type="submit"] {
+            margin: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        select {
+            width: 120px;
+            background-color: #FFF;
+        }
+        input[type="date"] {
+            background-color: #FFF;
+        }
+        input[type="submit"] {
+            background-color: #0d6efd;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0d6efd;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #0d6efd;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #FFF;
+        }
+		table tbody tr:last-child td:last-child {
+            padding-left: 1px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2>Select Date Range</h2>
+    <form method="GET">
+        <label>Start Date:</label>
+        <input type="date" name="start_date" value="{{ start_date }}"><br><br>
+        <label>End Date:</label>
+        <input type="date" name="end_date" value="{{ end_date }}"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+
+	{% if summary_data %}
+    <h3>Attendance Summary Table</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Attendance</th>
+                <th>Group Class</th>
+                <th>Personal Training Session</th>
+                <th>Use the Gym Only</th>
+            </tr>
+        </thead>
+        <tbody>
+			{% set total = 0 %}
+            {% for date, data in summary_data['daily_count'].items() %}
+            {% set total = total + data['group_class'] + data['personal_training_session'] + data['use_gym_only'] %}
+            <tr>
+                <td>{{ date }}</td>
+                <td>{{ total }}</td>            
+                <td>{{ data['group_class'] }}</td>
+                <td>{{ data['personal_training_session'] }}</td>
+                <td>{{ data['use_gym_only'] }}</td>
+				<td></td> 
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: left;">Total attendance summary:</td>
+                <td>{{ summary_data['total_count'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+   
+
+{% if rows %}
+    <h3>Attendance Detailed Table</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Attendance Date</th>
+                <th>Attendance Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>
+                    {% if row[2] == 1 %}
+                        Group Class
+                    {% elif row[2] == 2 %}
+                        Personal Training Session
+                    {% elif row[2] == 3 %}
+                        Use the Gym Only
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+    
+</body>
+
+{% endblock %}

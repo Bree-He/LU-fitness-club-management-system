@@ -1,0 +1,68 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+ 
+<div class="container mt-3 text-center">
+    <h5>Book Class</h5>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning text-center" role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}  
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">{{ description[1] }}</div> <!-- class name as header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Equipment:</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>{{ description[3] }}</p> <!-- display Equipment needed -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Level of Difficulty:</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>{{ description[4] }}</p> <!-- display level -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Description:</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>{{ description[2] }}</p> <!-- display description -->
+                        </div>
+                    </div>
+                    <hr>
+                    <form action="" class="text-center mt-2" method="post">
+                        <div class="mb-3">
+                            <select class="form-select" name="book_time" required>
+                                <option selected disabled>select book time</option>
+                                {% for schedule in schedules %}
+                                <option value="{{schedule[7]}}">{{schedule[7]}}({{schedule[4]}}-{{schedule[5]}}) - {{schedule[3]}} - Space Left: {{schedule[2]}}/30</option>
+                                {% endfor %}
+                              </select>
+                        </div>
+                        <input type="text" name="class_id" value="{{class_id}}" hidden>
+                        <a class="btn btn-danger" href="{{ url_for('member.class_list') }}">Cancel</a>
+                        <button type="submit" class="btn btn-primary" >Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

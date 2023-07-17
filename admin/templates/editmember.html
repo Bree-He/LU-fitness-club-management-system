@@ -1,0 +1,84 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+    
+      a.b{
+        text-decoration: none;
+        color: white;
+          }
+      a.b:hover {
+        color: white;
+      }
+    </style>
+    </head>
+<body>
+<br>
+{% if message %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endif %}
+<table class="table table-hover">
+    
+    <tr>
+      <th>Member id</th>
+      <th>Name</th>
+      <th>Date of birth</th>
+      <th>Address</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Subscription Status</th>
+      <th>Health condition</th>
+        
+      <th>Edit</th>
+      <th>Join</th>
+      <th>Cancel</th>
+      
+      
+    </tr>
+    {% for item in member%}
+    
+    {% set firstname = item[1] %}
+    {% set lastname = item[2] %}
+
+    {% set name = firstname +'  '+ lastname %}
+    <tr>
+        <td>{{item[0]}}</td>
+        <td>{{name}}</td>
+      
+        <td>{{item[3]}}</td>
+        <td>{{item[4]}}</td>
+        <td>{{item[5]}}</td>
+        <td>{{item[6]}}</td>
+        <td>{{item[7]}}</td>
+        <td>{{item[8]}}</td>
+        <td><button class="btn btn-success"><a class="b"href="{{ url_for('admin.edit', memberid=item[0]) }}">Edit</a></button></td>
+
+        {% if item[7] == 'active' %}
+      <td> </td>
+      {% else %}
+      <td>
+        <button  class="btn btn-warning"><a class="b" href="{{ url_for('admin.sub', memberid=item[0]) }}">Activate</a></button>
+      </td>
+      {% endif %}
+   
+      {% if item[7] == 'active' %}
+      <td> <!-- add a new column for the edit button -->
+        <button class="btn btn-danger" onclick="return confirm('Are you sure you want to unsubscribe?');"><a class="b" href="{{ url_for('admin.unsub', memberid=item[0]) }}">Inactivate</a></button>
+      </td>
+      {% else %}
+      <td> </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+</table>   
+<br>
+    <div class="d-grid gap-2 col-1 mx-auto">
+    <button class="btn btn-outline-primary"><a href="{{ url_for('admin.search') }}">Next</a></button>
+    </div>
+
+</body>    
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<head>
+<style>
+    
+    .container {
+        background-color: #f2f2f2;
+        width: 500px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
+    .col-md-12,
+    .col-md-4{
+        padding: 16px 16px;
+    }
+    h2{
+        text-align: center;
+    }
+   
+    
+</style>
+
+
+    
+   
+</head>
+<body>
+<br>
+<div class="container">   
+<form method="POST" action="{{ url_for('member.pt_payment_success') }}" class="row g-3">
+    <h2>Personal Training Payment</h2>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="ptamount">Amount to pay:</label>
+            <input type="number" id="ptamount" name="ptamount" value="30.00" readonly>
+        </div>
+    <div class="form-group col-md-12">
+    <label for="ptcard_type" class="form-label">Card Type:</label>
+    <select name="ptcard_type" id="ptcard_type" class="form-select">
+      <option value="Online">Credit</option>
+      <option value="Online">Debit</option>
+    </select>
+    </div>
+    </div>
+    <br>
+    <!-- <label for="card_number">Card Number:</label> -->
+    <div class="row">
+    <div class="form-group col-md-12">
+    <input type="tel" id="card_number" name="card_number" inputmode="numeric" placeholder="xxxx xxxx xxxx xxxx" required pattern="[0-9\s]{13,19}" class="form-control">
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="form-group col-md-12">
+    <input type="text" id="name" name="name" placeholder="Name on Card" required maxlength="40" class="form-control">
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="form-group col-md-4">
+    <input type="number" id="month" name="month" min="01" max="12" placeholder="MM" class="form-control" required>
+    </div>
+    <br>
+    <div class="form-group col-md-4">
+    <input type="number" id="year" name="year" min="23" max="30" placeholder="YY" class="form-control" required>
+    </div>
+    <br>
+    <div class="form-group col-md-4">
+    <input type="number" id="cvv" name="cvv" placeholder="CVV" class="form-control" required>
+    </div>
+    </div>
+    <br>
+    <div class="d-grid gap-4 col-3 mx-auto">
+        <button onclick="window.location.href='{{ url_for('member.ptsearch')}}'" class="btn btn-secondary">Back</button>
+    </div>
+    <div class="d-grid gap-4 col-3 mx-auto">
+        <input type="submit" value="Pay" class="btn btn-outline-primary">
+    </div>
+  </form>
+
+</div>
+</body>
+
+{% endblock %}
+

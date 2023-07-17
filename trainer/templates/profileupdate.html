@@ -1,0 +1,96 @@
+{% extends "trainer.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <form action="" method="post">
+        <input type="text" value="{{trainerProfile[0]}}" name="trainer_id" hidden>
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input disabled type="text" class="form-control" value="{{ trainerProfile[1] }}" name="first_name" maxlength="45">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input disabled type="text" class="form-control" value="{{trainerProfile[2]}}" name="last_name" maxlength="45">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date of birth</label>
+            <input disabled type="text" class="form-control" value="{{trainerProfile[6]}}" name="dob" maxlength="45">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Expertise</label>
+            <select class="form-select" name="expertise" required>
+                <option disabled>Choose your expertise</option>
+                <option value="Strength and conditioning" {% if trainerProfile[3] == 'Strength and conditioning' %}selected{%endif%}>Strength and conditioning</option>
+                <option value="Cardiovascular training" {% if trainerProfile[3] == 'Cardiovascular training' %}selected{%endif%}>Cardiovascular training</option>
+                <option value="Nutrition and weight management" {% if trainerProfile[3] =='Nutrition and weight management' %}selected{%endif%}>Nutrition and weight management</option>
+                <option value="Functional training" {% if trainerProfile[3] == 'Functional training' %}selected{%endif%}>Functional training</option>
+              </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" value="{{trainerProfile[4]}}" name="email" maxlength="45" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" value="{{trainerProfile[5]}}" id="phone" name="phone" maxlength="13" placeholder="XX-XXX-XXXX"  required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Education</label>
+            <input type="text" class="form-control" value="{{trainerProfile[7]}}" name="education" maxlength="80" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Introduction</label>
+            <textarea class="form-control" name="self_introduction" rows="3" maxlength="300" required>{{trainerProfile[8]}}</textarea>
+        </div>
+        <div class="text-center">
+            <span class="ml-3">
+                <a class="btn btn-danger" href="{{ url_for('trainer.trainerdetails') }}">Cancel</a>
+            </span>
+            <span>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </span>
+        </div>
+    </form>
+</div>
+<!-- JavaScript code for formatting the phone number -->
+<script>
+    // Get the phone number input element by ID
+    const phoneInput = document.getElementById("phone");
+    // Add an event listener for input changes
+    phoneInput.addEventListener("input", function(event) {
+        // Get the raw input value without formatting
+        let rawValue = event.target.value.replace(/\D/g, "");
+
+        // Limit the length of the input to between 10 and 13 characters
+        if (rawValue.length < 12) {
+            rawValue = rawValue.slice(0, 12);
+        } else if (rawValue.length > 9) {
+            rawValue = rawValue.slice(0, 9);
+        }
+        
+        // Format the value as XX-XXX-XXXXX
+        let formattedValue = "";
+        for (let i = 0; i < rawValue.length; i++) {
+            if (i == 2 || i == 5) {
+                formattedValue += "-";
+            }
+            formattedValue += rawValue[i];
+        }  
+        
+        // Set the formatted value back to the input field
+        event.target.value = formattedValue;
+    });
+
+    // Retrieve the phone number value from the database
+    const phoneNumber = "{{ trainerProfile[0][5] }}"; 
+
+    // Add an event listener for form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (phoneInput.value.replace(/\D/g, '').length < 9) {
+            alert('Please enter a valid phone number with at least 9 digits');
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

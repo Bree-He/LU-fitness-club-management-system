@@ -1,0 +1,53 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h5 class="text-center">Subscription Status</h5>
+    <hr>
+    <a class="btn btn-danger export-btn" href="{{ url_for('admin.subStatusExport') }}" role="button">Export</a>
+    <form name="filterBy" id="filterBy" method="post" action="{{ url_for("admin.substatus")}}">
+    <div class="d-flex">
+        <select class="form-select form-select-sm" aria-label="Default select example" title="selectMonth" name="selectMonth" id="selectMonth">
+            <option value="0">All Months</option>
+            {% for month in monthDropdownMenu %}
+                <option value={{month[0]}} {% if month[0] == selectMonth %} selected {% endif %}>{{month[1]}}</option>
+            {% endfor %}
+        </select>
+        <select class="form-select form-select-sm" aria-label="Default select example" title="byStatus" name="byStatus" id="byStatus">
+            <option value="">All Status</option>
+            {% for status in statusDropdownMenu %}
+                <option value={{status[0]}} {% if status[0] == byStatus %} selected {% endif %}>{{status[0]}}</option>
+            {% endfor %}
+        </select>
+        <div><button type="submit" class="btn btn-primary">Submit</button></div>
+    </div>
+    </form>
+</div>
+<div class="container">
+<table class="table table-hover table-striped table-bordered text-center">
+    <thead>
+      <tr>
+          <th>Member ID</th>
+          <th>{{dbcols[1]}}</th>
+          <th>{{dbcols[2]}}</th>
+          <th>Subscription Status</th>
+          <th>Auto Payment</th>
+          <th>Membership Expiration Date</th>
+      </tr>
+    </thead>
+    <tbody>
+        <!-- title row will show in order when using the for loop -->
+        {% for result in dbresult %}
+        <tr>
+        {% for col in range(dbcols|length) %}
+            <td>{{result[col]}}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+{% endblock %}

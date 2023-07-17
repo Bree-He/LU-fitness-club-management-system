@@ -1,0 +1,130 @@
+{% extends "member.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<!-- Show a success message if it exists -->
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{ success_message }}
+</div>
+{% endif %}
+
+<div class="container mt-3">
+    {% for profile in memberprofile %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <!-- Display the member's profile picture -->
+                    <img src="{{ url_for('member.static', filename='profile_pic.jpg') }}" class="card-img-top">
+                    <div class="card-body">
+                         <!-- Display the member's first and last name -->
+                        <h5 class="card-title">{{ profile[1] }} {{ profile[2] }}</h5>
+                        <h5 class="card-title">Date of birth:   {{ profile[3] }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">My Profile</h5>                
+                        <hr>
+                        <form action="/member/profile/update/" method="POST">
+                            <div class="form-group row mb-3">
+                                <label for="email" class="col-sm-4 col-form-label">Email*</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ profile[4] }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="address" class="col-sm-4 col-form-label">Address*</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="address" name="address" value="{{ profile[5] }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="phone" class="col-sm-4 col-form-label">Contact Number*</label>
+                                <div class="col-sm-8">
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{ profile[6]}}" placeholder="XX-XXX-XXXX" maxlength="13" required>
+                                </div>
+                            </div>
+                                                  
+                            <div class="form-group row mb-3">
+                                <label for="health_condition" class="col-sm-4 col-form-label">Health Condition</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="health_condition" name="health_condition" value="{{ profile[7] }}" maxlength="58">
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="card-title">Membership Expiration Date</h5>
+                            <hr>
+                            <div class="form-group row mb-3">
+                                <p>{{ profile[8] }}</p> 
+                            </div>
+                            <hr>
+                            <div class="form-group row mb-3">
+                                <h3> <a href="{{ url_for('member.bookings') }}" class="btn btn-primary btn-sm">My Bookings</a></h3>
+                            </div>
+                            <hr>                      
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <button type="reset" class="btn btn-secondary float-left">Reset</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-primary float-right" onclick="return confirm('Are you sure you want to save your changes?')">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}    
+</div>  
+
+
+<!-- JavaScript code for formatting the phone number -->
+<script>
+    // Get the phone number input element by ID
+    const phoneInput = document.getElementById("phone");
+    // Add an event listener for input changes
+    phoneInput.addEventListener("input", function(event) {
+        // Get the raw input value without formatting
+        let rawValue = event.target.value.replace(/\D/g, "");
+
+        // Limit the length of the input to between 9 and 11 characters
+        if (rawValue.length < 12) {
+            rawValue = rawValue.slice(0, 12);
+        } else if (rawValue.length > 9) {
+            rawValue = rawValue.slice(0, 9);
+        }
+        
+        // Format the value as XX-XXX-XXXXX
+        let formattedValue = "";
+        for (let i = 0; i < rawValue.length; i++) {
+            if (i == 2 || i == 5) {
+                formattedValue += "-";
+            }
+            formattedValue += rawValue[i];
+        }  
+        
+        // Set the formatted value back to the input field
+        event.target.value = formattedValue;
+    });
+
+    // Retrieve the phone number value from the database
+    const phoneNumber = "{{ memberprofile[0][6] }}"; 
+
+    // Add an event listener for form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (phoneInput.value.replace(/\D/g, '').length < 9) {
+            alert('Please enter a valid phone number with at least 9 digits');
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+
+
+{% endblock %}

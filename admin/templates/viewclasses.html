@@ -1,0 +1,52 @@
+{% extends "admin.html" %}
+{% block greeting %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h5>Search For Class</h5> 
+  <form name="submitTrainer" id="submitTrainer" method="post" action="{{ url_for("admin.viewclasses")}}">
+      <div class="d-flex">
+          <select class="form-select form-select-sm" aria-label="Default select example" title="selectTrainer" name="selectTrainer" id="selectTrainer">
+              <option value="0">All Trainer</option>
+              {% for trainer in trainerDropdownMenu %}
+                  <option value={{trainer[0]}} {% if trainer[0] == selectTrainer %} selected {% endif %}>{{trainer[1]}}</option>
+              {% endfor %}
+          </select>
+          <div class="col-auto">
+              <label for="searchClass" class="visually-hidden">Class Name</label>
+              <input type="text" class="form-control" id="searchClass" name="searchClass" placeholder="Search Class Name" value={{searchClass}}></input>
+          </div>
+          <select class="form-select form-select-sm" aria-label="Default select example" title="byMonth" name="byMonth" id="byMonth">
+            <option value="0">All Year</option>
+            {% for month in monthDropdownMenu %}
+                <option value={{month[0]}} {% if month[0] == byMonth %} selected {% endif %}>{{month[1]}}</option>
+            {% endfor %}
+        </select>
+          <div><button type="submit" class="btn btn-primary">Submit</button></div>
+      </div>
+  </form>
+</div>
+<div class="container">
+  <!-- using bootstrap hover table format -->
+  <table class="table table-hover table-striped table-bordered text-center">
+    <thead>
+      <tr>
+  <!-- title row will show in order when using the for loop -->
+        {% for col in dbcols %}
+          <th>{{col}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <!-- title row will show in order when using the for loop -->
+      {% for result in dbresult %}
+        <tr>
+          {% for col in range(dbcols|length) %}
+            <td>{{result[col]}}</td>
+          {% endfor %}
+        </tr>  
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    {% if error %}
+	<div class="alert alert-danger alert-dismissible fade show  text-center py-2" role="alert">
+		{{ error }}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>	
+	{% endif %}
+
+    <div class="center">
+		<!-- action!!! -->
+	    <form method="POST" action="/loginuser" method="post" class="align-items-center">
+		    <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Username:</span>
+                <input type="text" id="username" name="username" class="form-control" required>
+                <button class="btn btn-outline-primary" type="submit">Login</button>
+            </div>
+		</form>
+	</div>
+</body>
+{% endblock %}
